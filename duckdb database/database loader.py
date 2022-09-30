@@ -1,6 +1,9 @@
-import duckdb as db
+# %%
+import duckdb
 import pandas as pd
 # %%
-Magic_Card_DB = 
+#con = duckdb.connect(database = 'MTG_Card.db', read_only = True)
 
+
+con.close()
 # %%

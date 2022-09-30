@@ -4,7 +4,7 @@ install.packages("tidyverse")
 library("DBI")
 library("tidyverse")
 
-Magic_DB = dbConnect(duckdb::duckdb(), dbdir="MTG_Card.db", read_only = FALSE)
+Magic_DB = dbConnect(duckdb::duckdb(), dbdir="MTG_Card.db", read_only = TRUE)
 
 #table construction
 dbExecute(Magic_DB, "CREATE OR REPLACE TABLE set(id INTEGER PRIMARY KEY, Name VARCHAR, Release_Date DATE)")
@@ -15,4 +15,4 @@ MTG_view = dbGetQuery(Magic_DB, "SELECT * FROM set")
 
 View(MTG_view)
 
-dbDisconnect(Magic_DB, shutdown = TRUE)
+dbDisconnect(Magic_DB, shutdown=TRUE)
