@@ -4,15 +4,10 @@ install.packages("tidyverse")
 library("DBI")
 library("tidyverse")
 
-Magic_DB <- dbConnect(duckdb::duckdb(), dbdir = "MTG_Card.duckdb", read_only = FALSE)
-
-dbExecute(Magic_DB, "INSTALL sqlite_scanner;")
-
-dbExecute(Magic_DB, "LOAD ':sob: ';")
+Magic_DB <- dbConnect(duckdb::duckdb(), dbdir = ":memory:", read_only = FALSE)
 
 
-# dbExecute(Magic_DB, "CALL sqlite_attach('data/sql_data/AllPrintings.sqlite')")
-# table construction
+dbExecute(Magic_DB, "CALL sqlite_scanner('');")
 
 # dbExecute(Magic_DB, "CREATE OR REPLACE TABLE set(id INTEGER PRIMARY KEY, 
 #                                                  Name VARCHAR, 
@@ -24,15 +19,15 @@ dbExecute(Magic_DB, "LOAD ':sob: ';")
 
 # dbExecute(Magic_DB, "json(")
 
-dbExecute(Magic_DB, "CREATE OR REPLACE TABLE set(id INTEGER PRIMARY KEY, 
-                                                 Name VARCHAR, 
-                                                 Release_Date DATE)")
-dbExecute(Magic_DB, "Create OR RELACE TABLE card(id INTEGER PRIMARY KEY, 
-                                                 Name VARCHAR")
+# dbExecute(Magic_DB, "CREATE OR REPLACE TABLE set(id INTEGER PRIMARY KEY, 
+#                                                  Name VARCHAR, 
+#                                                  Release_Date DATE)")
+# dbExecute(Magic_DB, "Create OR RELACE TABLE card(id INTEGER PRIMARY KEY, 
+#                                                  Name VARCHAR")
 
-dbExecute(Magic_DB, "INSERT INTO set VALUES (1,'Alpha', '1993-08-05'), 
-                                            (2, 'Beta', '1993-10-04'), 
-                                            (3, 'Unlimited', '1993-12-01')")
+# dbExecute(Magic_DB, "INSERT INTO set VALUES (1,'Alpha', '1993-08-05'), 
+#                                             (2, 'Beta', '1993-10-04'), 
+#                                             (3, 'Unlimited', '1993-12-01')")
 
 
 
