@@ -1,13 +1,15 @@
 
-install.packages("duckdb")
+install.packages('duckdb', repos=c('https://duckdb.r-universe.dev', 'https://cloud.r-project.org'))
 install.packages("tidyverse")
 library("DBI")
 library("tidyverse")
 
 Magic_DB <- dbConnect(duckdb::duckdb(), dbdir = ":memory:", read_only = FALSE)
 
+dbExecute(Magic_DB, "INSTALL sqlite_scanner")
+dbExecute(Magic_DB, "LOAD sqlite_scanner")
 
-dbExecute(Magic_DB, "CALL sqlite_scanner('');")
+dbExecute(Magic_DB, "CALL sqlite_attach('../MTG_Database/data/sqllite_data/AllPrintings.sqlite.gz');")
 
 # dbExecute(Magic_DB, "CREATE OR REPLACE TABLE set(id INTEGER PRIMARY KEY, 
 #                                                  Name VARCHAR, 
