@@ -6,11 +6,13 @@ library("tidyverse")
 
 Magic_DB <- dbConnect(duckdb::duckdb(), dbdir = ":memory:", read_only = FALSE)
 
-dbExecute(Magic_DB, "INSTALL sqlite_scanner")
-dbExecute(Magic_DB, "LOAD sqlite_scanner")
-
-dbExecute(Magic_DB, "CALL sqlite_attach('../MTG_Database/data/sqllite_data/AllPrintings.sqlite.gz');")
-
+dbExecute(Magic_DB, "CREATE OR REPLACE TABLE Cards AS SELECT * FROM read_csv_auto('..\\data\\sqllite_data\\AllPrintingsCSVFiles\\cards.csv',SAMPLE_SIZE=-1);")
+dbExecute(Magic_DB, "CREATE OR REPLACE TABLE Legalities AS SELECT * FROM read_csv_auto('..\\data\\sqllite_data\\AllPrintingsCSVFiles\\legalities.csv',SAMPLE_SIZE=-1);")
+dbExecute(Magic_DB, "CREATE OR REPLACE TABLE Meta AS SELECT * FROM read_csv_auto('..\\data\\sqllite_data\\AllPrintingsCSVFiles\\meta.csv',SAMPLE_SIZE=-1);")
+dbExecute(Magic_DB, "CREATE OR REPLACE TABLE Rulings AS SELECT * FROM read_csv_auto('..\\data\\sqllite_data\\AllPrintingsCSVFiles\\rulings.csv',SAMPLE_SIZE=-1);")
+dbExecute(Magic_DB, "CREATE OR REPLACE TABLE Set_translations AS SELECT * FROM read_csv_auto('..\\data\\sqllite_data\\AllPrintingsCSVFiles\\set_translations.csv',SAMPLE_SIZE=-1);")
+dbExecute(Magic_DB, "CREATE OR REPLACE TABLE Sets AS SELECT * FROM read_csv_auto('..\\data\\sqllite_data\\AllPrintingsCSVFiles\\sets.csv',SAMPLE_SIZE=-1);")
+dbExecute(Magic_DB, "CREATE OR REPLACE TABLE Tokens AS SELECT * FROM read_csv_auto('..\\data\\sqllite_data\\AllPrintingsCSVFiles\\tokens.csv',SAMPLE_SIZE=-1);")
 # dbExecute(Magic_DB, "CREATE OR REPLACE TABLE set(id INTEGER PRIMARY KEY, 
 #                                                  Name VARCHAR, 
 #                                                  Release_Date DATE)")
@@ -30,6 +32,7 @@ dbExecute(Magic_DB, "CALL sqlite_attach('../MTG_Database/data/sqllite_data/AllPr
 # dbExecute(Magic_DB, "INSERT INTO set VALUES (1,'Alpha', '1993-08-05'), 
 #                                             (2, 'Beta', '1993-10-04'), 
 #                                             (3, 'Unlimited', '1993-12-01')")
+
 
 
 
