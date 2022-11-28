@@ -20,6 +20,13 @@ con.execute("CREATE OR REPLACE TABLE Tokens AS SELECT * FROM read_csv_auto('..\d
 
 # %%
 
+con.execute("SELECT * FROM ")
+
+
+
+
+# %%
+
 con.close()
 
 
