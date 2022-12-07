@@ -5,7 +5,7 @@ install.packages("tidyverse")
 library("DBI")
 library("tidyverse")
 
-Magic_DB <- dbConnect(duckdb::duckdb(), dbdir = ":memory:", read_only = FALSE)
+Magic_DB = dbConnect(duckdb::duckdb(), dbdir = ":memory:", read_only = FALSE)
 
 dbExecute(Magic_DB, "CREATE SCHEMA IF NOT EXISTS MTG;")
 dbExecute(Magic_DB, "CREATE OR REPLACE TABLE MTG.Cards AS SELECT * FROM read_csv_auto('..\\MTG_Database\\data\\sqllite_data\\AllPrintingsCSVFiles\\cards.csv',SAMPLE_SIZE=-1);")
@@ -16,9 +16,12 @@ dbExecute(Magic_DB, "CREATE OR REPLACE TABLE MTG.Set_translations AS SELECT * FR
 dbExecute(Magic_DB, "CREATE OR REPLACE TABLE MTG.Sets AS SELECT * FROM read_csv_auto('..\\MTG_Database\\data\\sqllite_data\\AllPrintingsCSVFiles\\sets.csv',SAMPLE_SIZE=-1);")
 dbExecute(Magic_DB, "CREATE OR REPLACE TABLE MTG.Tokens AS SELECT * FROM read_csv_auto('..\\MTG_Database\\data\\sqllite_data\\AllPrintingsCSVFiles\\tokens.csv',SAMPLE_SIZE=-1);")
 
-con <- dbGetQuery(Magic_DB, "SELECT * FROM MTG.Meta")
-
+con <- dbGetQuery(Magic_DB, "SELECT * FROM MTG.Sets LIMIT 5")
+print(con)
 con_1 <- dbGetQuery(Magic_DB, "DESCRIBE MTG.Cards;")
-print(con_1)
- 
+View(con_1)
+con_2 <- dbGetQuery(Magic_DB, "DESCRIBE MTG.Sets;")
+View(con_2) 
+
+
 dbDisconnect(Magic_DB, shutdown = TRUE)
