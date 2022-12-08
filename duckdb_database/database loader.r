@@ -16,12 +16,14 @@ dbExecute(Magic_DB, "CREATE OR REPLACE TABLE MTG.Set_translations AS SELECT * FR
 dbExecute(Magic_DB, "CREATE OR REPLACE TABLE MTG.Sets AS SELECT * FROM read_csv_auto('..\\MTG_Database\\data\\sqllite_data\\AllPrintingsCSVFiles\\sets.csv',SAMPLE_SIZE=-1);")
 dbExecute(Magic_DB, "CREATE OR REPLACE TABLE MTG.Tokens AS SELECT * FROM read_csv_auto('..\\MTG_Database\\data\\sqllite_data\\AllPrintingsCSVFiles\\tokens.csv',SAMPLE_SIZE=-1);")
 
-con <- dbGetQuery(Magic_DB, "SELECT * FROM MTG.Sets LIMIT 5")
-print(con)
+con <- dbGetQuery(Magic_DB, "SELECT * FROM MTG.Sets LIMIT 10")
+View(con)
 con_1 <- dbGetQuery(Magic_DB, "DESCRIBE MTG.Cards;")
 View(con_1)
 con_2 <- dbGetQuery(Magic_DB, "DESCRIBE MTG.Sets;")
 View(con_2) 
 
 
+con_3 <- dbGetQuery(Magic_DB, "SELECT s.code, c.rarity, s.name, c.name FROM MTG.Cards c JOIN MTG.Sets s ON c.setcode = s.code LIMIT 50")
+View(con_3)
 dbDisconnect(Magic_DB, shutdown = TRUE)
